@@ -1,0 +1,31 @@
+package com.boojr.AutoDisconnect;  // We use this package name to organize our code
+
+import meteordevelopment.meteorclient.systems.modules.Modules;  // This imports Meteor Client's base classes
+import meteordevelopment.meteorclient.utils.player.Modules;  // For disconnecting the player
+import meteordevelopment.meteorclient.events.world.DimensionChangeEvent; // Import the DimensionChangeEvent class
+
+public class AutoDisconnect extends Module {
+    public AutoDisconnect() {
+        super("AutoDisconnect", "Disconnects when you enter the Nether.", Category.Misc);  // Module name and description
+    }
+
+    @Override
+    public void onEnable() {
+        // Register to listen for changes in the player's dimension (world)
+        client.getEventDispatcher().registerListener(this::onDimensionChange);
+    }
+
+    private void onDimensionChange(DimensionChangeEvent event) {
+        // If the player enters the Nether, disconnect them
+        if (event.getDimension().getName().equals("minecraft:nether")) {
+            ChatUtils.sendPlayerMsg("You have entered the Nether.");
+            client.getNetworkHandler().getConnection().disconnect("You have entered the Nether.");
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        // Clean up when the module is turned off
+        client.getEventDispatcher().unregisterListener(this::onDimensionChange);
+    }
+}

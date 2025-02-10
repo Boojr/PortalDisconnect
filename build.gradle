@@ -1,0 +1,21 @@
+plugins {
+    id 'java'  // We're using Java for this project
+    id 'maven-publish'  // Used to publish the build (for later distribution if needed)
+}
+
+group = 'com.boojr'  // You can put your name here
+version = '1.0.1'
+
+repositories {
+    mavenCentral()  // This lets us use libraries from the internet
+    maven { url 'https://repo.spongepowered.org/maven' }  // Meteor Client dependency repository
+}
+
+dependencies {
+    // This is where we add dependencies for Meteor Client and other libraries
+    implementation 'com.meteorclient:meteor-client:0.4.3'  // Replace with the latest version of Meteor Client
+    implementation 'org.jetbrains:annotations:22.0.0'  // Annotations for easier coding
+}
+
+sourceCompatibility = '1.8'   // Tells Gradle we're using Java 8 or higher
+targetCompatibility = '1.8'
